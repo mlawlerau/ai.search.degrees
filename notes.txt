@@ -1,0 +1,44 @@
+Emma Watson vs Jennifer Lawrence
+
+---- first working solution - very slow! ----
+Persons Explored: 2005
+3 degrees of separation.
+1: Emma Watson and Daniel Radcliffe starred in Creating the World of Harry Potter, Part 4: Sound and Music
+2: Daniel Radcliffe and Woody Harrelson starred in Lost in London
+3: Woody Harrelson and Jennifer Lawrence starred in The Hunger Games: Mockingjay - Part 2
+
+---- added a timer - hmm different solution ----
+Persons Explored: 3697
+Elapsed time: 11 mins 40 secs
+3 degrees of separation.
+1: Emma Watson and Jason Isaacs starred in Creating the World of Harry Potter, Part 4: Sound and Music
+2: Jason Isaacs and Ed Harris starred in Sweetwater
+3: Ed Harris and Jennifer Lawrence starred in Mother!
+
+---- tracked node creation separately to node exploration - another solution ----
+Nodes Created: 38402
+Nodes Explored: 2946
+Elapsed time: 6 mins 20 secs
+3 degrees of separation.
+1: Emma Watson and Paul Rudd starred in The Perks of Being a Wallflower
+2: Paul Rudd and Michelle Pfeiffer starred in I Could Never Be Your Woman
+3: Michelle Pfeiffer and Jennifer Lawrence starred in Mother!
+
+---- implemented suggested goal check optimisation - much faster now! ----
+Nodes Created: 2228
+Nodes Explored: 61
+Elapsed time: 0.42 secs
+3 degrees of separation.
+1: Emma Watson and Daniel Radcliffe starred in Creating the World of Harry Potter, Part 4: Sound and Music
+2: Daniel Radcliffe and Woody Harrelson starred in Lost in London
+3: Woody Harrelson and Jennifer Lawrence starred in The Hunger Games: Mockingjay - Part 1
+
+---- another run, another solution ----
+Nodes Created: 2540
+Nodes Explored: 59
+Elapsed time: 1.04 secs
+3 degrees of separation.
+1: Emma Watson and Tracey Ullman starred in The Tale of Despereaux
+2: Tracey Ullman and Michelle Pfeiffer starred in I Could Never Be Your Woman
+3: Michelle Pfeiffer and Jennifer Lawrence starred in Mother!
+

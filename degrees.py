@@ -1,5 +1,6 @@
 import csv
 import sys
+import time
 
 from util import Node, StackFrontier, QueueFrontier
 
@@ -69,7 +70,13 @@ def main():
     if target is None:
         sys.exit("Person not found.")
 
+    # Record current time
+    start_time = time.perf_counter()
+
     path = shortest_path(source, target)
+
+    # Print out elapsed time to execute shortes_path
+    print_elapsed_time(start_time)
 
     if path is None:
         print("Not connected.")
@@ -92,8 +99,64 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    # TODO
-    raise NotImplementedError
+    # handle "empty path" solution
+    if source == target:
+        # return empty list as per https://us.edstem.org/courses/176/discussion/23640
+        return []
+
+    # ------------ Node model ------------
+    # Node.state = the person_id we have reached at this state
+    # Node.action = the (movie_id, person_id) pair we followed from the parent state (person_id)
+    # ------------------------------------
+
+    # Initialize frontier to just the source person
+    start = Node(state=source, parent=None, action=None)
+    frontier = QueueFrontier()
+    frontier.add(start)
+
+    # Initialize an empty explored set
+    explored = set()
+
+    # Two counters used for optimisation analysis only
+    nodes_created = 1
+    nodes_explored = 0
+
+    # Keep looping until solution found
+    while True:
+
+        # If nothing left in frontier, then no path
+        if frontier.empty():
+            print("Nodes Created:", nodes_created)
+            print("Nodes Explored:", nodes_explored)
+            return None
+
+        # Choose a node from the frontier
+        node = frontier.remove()
+        nodes_explored += 1
+
+        # Mark node as explored
+        explored.add(node.state)
+
+        # Explore the node by examining it's neighbors and
+        # adding them to the frontier if they do not link to the target person
+        for movie_id, person_id in neighbors_for_person(node.state):
+
+            # Optimisation:
+            # check for a goal as neighbours identified before creating nodes and adding them to the frontier
+            if person_id == target:
+                print("Nodes Created:", nodes_created)
+                print("Nodes Explored:", nodes_explored)
+                actions = [ [movie_id,person_id] ]
+                while node.parent is not None:
+                    actions.append(node.action)
+                    node = node.parent
+                actions.reverse()
+                return actions
+
+            if not frontier.contains_state(person_id) and person_id not in explored:
+                child = Node(state=person_id, parent=node, action=[movie_id,person_id])
+                nodes_created += 1
+                frontier.add(child)
 
 
 def person_id_for_name(name):
@@ -133,6 +196,21 @@ def neighbors_for_person(person_id):
         for person_id in movies[movie_id]["stars"]:
             neighbors.add((movie_id, person_id))
     return neighbors
+
+
+def print_elapsed_time(start_time):
+    """
+    Prints a pretty version of the elapsed time from start_time to now
+    """
+    elapsed_time = time.perf_counter() - start_time
+    seconds = int(elapsed_time)
+    minutes, seconds = divmod(seconds, 60)
+    pretty_time = ""
+    if minutes > 0:
+        pretty_time = '%d mins %d secs' % (minutes, seconds)
+    else:
+        pretty_time = f"{elapsed_time:0.2f} secs"
+    print("Elapsed time:", pretty_time)
 
 
 if __name__ == "__main__":
