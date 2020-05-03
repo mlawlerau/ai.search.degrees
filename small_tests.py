@@ -4,6 +4,7 @@ import time
 
 from degrees import load_data, shortest_path, people, movies
 
+
 def main():
     """
     Test harness to exercise the degrees.py project via the 'small' dataset.
@@ -12,24 +13,24 @@ def main():
     test_cases = [
 
         # Connected
-        {'source': '102',   'target': '102',   'expected': 0 }, # Kevin Bacon > Kevin Bacon
-        {'source': '914612','target': '914612','expected': 0 }, # Emma Watson > Emma Watson
-        {'source': '102',   'target': '158',   'expected': 1 }, # Kevin Bacon > Tom Hanks
-        {'source': '158',   'target': '102',   'expected': 1 }, # Tom Hanks > Kevin Bacon
-        {'source': '102',   'target': '193',   'expected': 1 }, # Kevin Bacon > Demi Moore
-        {'source': '193',   'target': '102',   'expected': 1 }, # Demi Moore > Kevin Bacon
-        {'source': '1597',  'target': '398',   'expected': 2 }, # Mandy Patinkin > Sally Field
-        {'source': '398',   'target': '1597',  'expected': 2 }, # Sally Field > Mandy Patinkin
-        {'source': '163',   'target': '705',   'expected': 4 }, # Dustin Hoffman > Robin Wright
-        {'source': '705',   'target': '163',   'expected': 4 }, # Robin Wright > Dustin Hoffman
-        {'source': '163',   'target': '1697',  'expected': 5 }, # Dustin Hoffman > Chris Sarandon
-        {'source': '1697',  'target': '163',   'expected': 5 }, # Chris Sarandon > Dustin Hoffman
+        {'source': '102',    'target': '102',    'expected': 0}, # Kevin Bacon > Kevin Bacon
+        {'source': '914612', 'target': '914612', 'expected': 0}, # Emma Watson > Emma Watson
+        {'source': '102',    'target': '158',    'expected': 1}, # Kevin Bacon > Tom Hanks
+        {'source': '158',    'target': '102',    'expected': 1}, # Tom Hanks > Kevin Bacon
+        {'source': '102',    'target': '193',    'expected': 1}, # Kevin Bacon > Demi Moore
+        {'source': '193',    'target': '102',    'expected': 1}, # Demi Moore > Kevin Bacon
+        {'source': '1597',   'target': '398',    'expected': 2}, # Mandy Patinkin > Sally Field
+        {'source': '398',    'target': '1597',   'expected': 2}, # Sally Field > Mandy Patinkin
+        {'source': '163',    'target': '705',    'expected': 4}, # Dustin Hoffman > Robin Wright
+        {'source': '705',    'target': '163',    'expected': 4}, # Robin Wright > Dustin Hoffman
+        {'source': '163',    'target': '1697',   'expected': 5}, # Dustin Hoffman > Chris Sarandon
+        {'source': '1697',   'target': '163',    'expected': 5}, # Chris Sarandon > Dustin Hoffman
 
         # Not Connected
-        {'source': '914612','target': '102',   'expected': -1 }, # Emma Watson > Kevin Bacon
-        {'source': '102',   'target': '914612','expected': -1 }, # Kevin Bacon > Emma Watson
-        {'source': '914612','target': '158',   'expected': -1 }, # Emma Watson > Tom Hanks
-        {'source': '158',   'target': '914612','expected': -1 }, # Tom Hanks > Emma Watson
+        {'source': '914612', 'target': '102',    'expected': -1}, # Emma Watson > Kevin Bacon
+        {'source': '102',    'target': '914612', 'expected': -1}, # Kevin Bacon > Emma Watson
+        {'source': '914612', 'target': '158',    'expected': -1}, # Emma Watson > Tom Hanks
+        {'source': '158',    'target': '914612', 'expected': -1}  # Tom Hanks > Emma Watson
     ]
 
     # Load data from files into memory

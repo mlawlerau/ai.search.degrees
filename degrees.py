@@ -134,7 +134,7 @@ def shortest_path(source, target):
             # Optimisation 1:
             # check for a goal as each neighbour identified before creating nodes and adding them to the frontier
             if person_id == target:
-                actions = [ (movie_id, person_id) ]
+                actions = [(movie_id, person_id)]
                 while node.parent is not None:
                     actions.append(node.action)
                     node = node.parent
