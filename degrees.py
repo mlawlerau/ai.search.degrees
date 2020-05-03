@@ -1,6 +1,5 @@
 import csv
 import sys
-import time
 
 from util import Node, StackFrontier, QueueFrontier
 
@@ -12,7 +11,6 @@ people = {}
 
 # Maps movie_ids to a dictionary of: title, year, stars (a set of person_ids)
 movies = {}
-
 
 def load_data(directory):
     """
@@ -70,13 +68,7 @@ def main():
     if target is None:
         sys.exit("Person not found.")
 
-    # Record current time
-    start_time = time.perf_counter()
-
     path = shortest_path(source, target)
-
-    # Print out elapsed time to execute shortes_path
-    print_elapsed_time(start_time)
 
     if path is None:
         print("Not connected.")
@@ -114,49 +106,50 @@ def shortest_path(source, target):
     frontier = QueueFrontier()
     frontier.add(start)
 
-    # Initialize an empty explored set
-    explored = set()
+    # Initialize an empty hash set of person_id strings of explored nodes
+    nodes_explored = set()
 
-    # Two counters used for optimisation analysis only
+    # Counter used for optimisation analysis only
     nodes_created = 1
-    nodes_explored = 0
 
     # Keep looping until solution found
     while True:
 
         # If nothing left in frontier, then no path
         if frontier.empty():
-            print("Nodes Created:", nodes_created)
-            print("Nodes Explored:", nodes_explored)
+            print(f"Nodes: {nodes_created} created / {len(nodes_explored)} explored")
             return None
 
         # Choose a node from the frontier
         node = frontier.remove()
-        nodes_explored += 1
 
-        # Mark node as explored
-        explored.add(node.state)
+        # Record person_id in explored_nodes
+        nodes_explored.add(node.state)
 
         # Explore the node by examining it's neighbors and
-        # adding them to the frontier if they do not link to the target person
+        # adding them to the frontier if they do not link directly to the target person
         for movie_id, person_id in neighbors_for_person(node.state):
 
-            # Optimisation:
-            # check for a goal as neighbours identified before creating nodes and adding them to the frontier
+            # Optimisation 1:
+            # check for a goal as each neighbour identified before creating nodes and adding them to the frontier
             if person_id == target:
-                print("Nodes Created:", nodes_created)
-                print("Nodes Explored:", nodes_explored)
-                actions = [ [movie_id,person_id] ]
+                actions = [ (movie_id, person_id) ]
                 while node.parent is not None:
                     actions.append(node.action)
                     node = node.parent
                 actions.reverse()
+                print(f"Nodes: {nodes_created} created / {len(nodes_explored)} explored")
                 return actions
 
-            if not frontier.contains_state(person_id) and person_id not in explored:
-                child = Node(state=person_id, parent=node, action=[movie_id,person_id])
+            # note: switched logical order of test here. in large/hard cases, size of nodes_explored is
+            # smaller than states in frontier, and originally this made a small difference but since
+            # refactoring frontier to maintain a hashset of states, they are both O(1) lookup now
+            if person_id not in nodes_explored and not frontier.contains_state(person_id):
+                child = Node(state=person_id, parent=node, action=(movie_id,person_id))
                 nodes_created += 1
                 frontier.add(child)
+                if ((nodes_created % 1000) == 0):
+                    print(f"Nodes: {nodes_created} created / {len(nodes_explored)} explored")
 
 
 def person_id_for_name(name):
@@ -196,21 +189,6 @@ def neighbors_for_person(person_id):
         for person_id in movies[movie_id]["stars"]:
             neighbors.add((movie_id, person_id))
     return neighbors
-
-
-def print_elapsed_time(start_time):
-    """
-    Prints a pretty version of the elapsed time from start_time to now
-    """
-    elapsed_time = time.perf_counter() - start_time
-    seconds = int(elapsed_time)
-    minutes, seconds = divmod(seconds, 60)
-    pretty_time = ""
-    if minutes > 0:
-        pretty_time = '%d mins %d secs' % (minutes, seconds)
-    else:
-        pretty_time = f"{elapsed_time:0.2f} secs"
-    print("Elapsed time:", pretty_time)
 
 
 if __name__ == "__main__":
