@@ -32,9 +32,9 @@ def main():
         {'source': '914612',  'target': '2225369', 'expected': 3},   # Emma Watson > Jennifer Lawrence
         {'source': '2225369', 'target': '914612',  'expected': 3},   # Jennifer Lawrence > Emma Watson
         {'source': '368871',  'target': '102',     'expected': 5},   # Henry Hathaway > Kevin Bacon
-        #{'source': '102',    'target': '368871',  'expected': 5},   # Kevin Bacon > Henry Hathaway (slow! 2-4 mins)
+        # {'source': '102',    'target': '368871',  'expected': 5},  # Kevin Bacon > Henry Hathaway (slow! 2-4 mins)
         {'source': '52500',   'target': '10208',   'expected': 8},   # Juliane Banse > Julian Acosta
-        #{'source': '52500',  'target': '10208',   'expected': 8},   # Julian Acosta > Juliane Banse (very slow! 12 mins)
+        # {'source': '52500',  'target': '10208',   'expected': 8},  # Julian Acosta > Juliane Banse (very slow! 12 mins)
 
         # Not Connected
         {'source': '372384',  'target': '370426', 'expected': -1},   # Ted Healy > Nathaniel Hawthorne
